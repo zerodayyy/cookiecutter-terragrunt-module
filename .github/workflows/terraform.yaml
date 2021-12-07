@@ -1,0 +1,49 @@
+{% raw -%}
+name: Terraform
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+jobs:
+  terraform-validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Read Terraform version from ASDF config
+        id: asdf
+        run:
+          echo '::set-output name=TERRAFORM_VERSION::$(cat .tool-versions | grep terraform | grep -Eo "([0-9]\.)+[0-9]+")'
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ steps.asdf.outputs.TERRAFORM_VERSION }}
+      - name: Check formatting
+        id: fmt
+        run: terraform fmt -check
+      - name: Initialize Terraform
+        id: init
+        run: terraform init -backend=false
+      - name: Validate Terraform code
+        id: validate
+        run: terraform validate -no-color
+  terraform-docs:
+    name: Docs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref }}
+      - name: Generate Terraform documentation
+        uses: terraform-docs/gh-actions@main
+        with:
+          config-file: .terraform-docs.yml
+          output-file: README.md
+          git-push: true
+          git-commit-message: Generate Terraform documentation
+{% endraw -%}

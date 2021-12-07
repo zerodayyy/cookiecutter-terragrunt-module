@@ -1,0 +1,7 @@
+{
+    "module_name": "terragrunt_module",
+    "module_description": "",
+    "_copy_without_render": [
+        ".github/CODEOWNERS"
+    ]
+}

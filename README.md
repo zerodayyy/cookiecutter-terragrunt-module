@@ -1,2 +1,6 @@
-# cookiecutter-terragrunt-module
-Cookiecutter template for a Terragrunt-style shared service module
+# `{{ cookiecutter.module_name }}`
+
+{{ cookiecutter.module_description }}
+
+<!-- BEGIN_TF_DOCS -->
+<!-- END_TF_DOCS -->

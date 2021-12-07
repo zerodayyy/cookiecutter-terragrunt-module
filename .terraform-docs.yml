@@ -1,0 +1,33 @@
+{% raw -%}
+formatter: markdown
+sections:
+  show:
+    - providers
+    - inputs
+    - resources
+content: |-
+  {{ .Inputs }}
+
+  {{ .Resources }}
+
+  {{ .Providers }}
+output:
+  file: README.md
+  mode: inject
+  template: |-
+    <!-- BEGIN_TF_DOCS -->
+    {{ .Content }}
+    <!-- END_TF_DOCS -->
+settings:
+  anchor: false
+  color: true
+  default: true
+  escape: true
+  hide-empty: true
+  html: false
+  indent: 2
+  lockfile: true
+  required: true
+  sensitive: true
+  type: true
+{% endraw -%}
