@@ -1,7 +1,4 @@
 {
-    "module_name": "terragrunt_module",
-    "module_description": "",
-    "_copy_without_render": [
-        ".github/CODEOWNERS"
-    ]
+    "module_name": "terraform-example-module",
+    "module_description": ""
 }
